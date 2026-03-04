@@ -74,7 +74,7 @@ impl <T:Debug> linked_list<T>{
                 Some(item) =>{
                     current = &mut item.next
                 },
-                None  =>{break;}
+                None  =>{return;}
             }
             i += 1;
         }
@@ -87,6 +87,36 @@ impl <T:Debug> linked_list<T>{
         *current = Some(new_node)
     }
 
+
+    fn delete_at(&mut self , index : u32){
+        let mut  current = &mut self.head;
+
+        let mut i = 0 ;  
+        while  i< index {
+            match  current {
+                Some(Node) =>{
+                    current = &mut Node.next;
+                }
+                None =>{
+                    break;
+                }
+            }
+            i += 1;
+        }
+        // Option::take() moves the value out of an Option and replaces it with None.
+
+        // fn take(&mut self) -> Option<T>
+
+        // before: Some(value)
+        // after : None
+        // return: Some(value)
+
+        
+        if let Some(mut boxed_node) = current.take() {
+            *current = boxed_node.next.take();
+        }
+
+    }
 }
 
 
@@ -117,6 +147,10 @@ pub fn list_operations(){
     list_b.print_list();
 
     list_b.insert_at(78, 2);
+
+    list_b.print_list();
+
+    list_b.delete_at(2);
 
     list_b.print_list();
 }
