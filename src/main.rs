@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
-use Practice_Rust::Linked_List::Single_list ;
-
+use Practice_Rust::linked_list::Double_list;
+use Practice_Rust::linked_list::Single_list;
 
 fn analyze_size(arr : &[i32]){
     println!("The first element is {:?}",arr[0]);
@@ -129,4 +129,5 @@ fn main() {
     p1.display();
 
     Single_list::list_operations();
+    Double_list::list_operations();
 }

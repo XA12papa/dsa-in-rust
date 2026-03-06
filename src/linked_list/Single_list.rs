@@ -117,6 +117,8 @@ impl <T:Debug> linked_list<T>{
         }
 
     }
+
+
 }
 
 
