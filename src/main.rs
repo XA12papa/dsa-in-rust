@@ -2,13 +2,14 @@
 
 use Practice_Rust::linked_list::Double_list;
 use Practice_Rust::linked_list::Single_list;
-
+use Practice_Rust::Stack::Stack;
 fn analyze_size(arr : &[i32]){
     println!("The first element is {:?}",arr[0]);
     println!("The size of the array is  {:?}",arr.len())
 }
 
 // structs 
+
 
 #[derive(Debug)]
 struct Status {
@@ -67,7 +68,8 @@ impl Arithmatic {
             Self::Add => x + y  ,
             Self::Substract => x-y,
         }
-    }
+    } 
+
 }
 fn handle_web_event(event : WebEvent){
     match  event {
@@ -130,4 +132,5 @@ fn main() {
 
     Single_list::list_operations();
     Double_list::list_operations();
+    Stack::stack_operations();
 }
