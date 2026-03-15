@@ -3,6 +3,9 @@
 use Practice_Rust::linked_list::Double_list;
 use Practice_Rust::linked_list::Single_list;
 use Practice_Rust::Stack::Stack;
+use Practice_Rust::Queue::queue;
+use Practice_Rust::Tree::BinaryTree;
+
 fn analyze_size(arr : &[i32]){
     println!("The first element is {:?}",arr[0]);
     println!("The size of the array is  {:?}",arr.len())
@@ -133,4 +136,7 @@ fn main() {
     Single_list::list_operations();
     Double_list::list_operations();
     Stack::stack_operations();
+    queue::queue_operations();
+
+    BinaryTree::Tree_operations();
 }
