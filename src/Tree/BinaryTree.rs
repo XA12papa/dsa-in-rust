@@ -1,5 +1,7 @@
 use core::panic;
-use std::{cell::RefCell, collections::VecDeque, fmt::Debug, rc::Rc};
+use std::{cell::RefCell, collections::VecDeque, fmt::Debug, io::Cursor, rc::Rc};
+
+use crate::Queue::queue;
 
 
 
@@ -21,7 +23,7 @@ struct Tree<T>{
 }
 
 
-impl <T: Debug + Copy> Tree<T> {
+impl <T: Debug + Copy +PartialEq> Tree<T> {
     fn new() -> Self {
         return Tree { root: None, node_count: 0 };
     }
@@ -30,7 +32,7 @@ impl <T: Debug + Copy> Tree<T> {
         if  i >= arr.len() {
             return None;
         }
-
+        self.node_count += 1 ;
         return Some(Rc::new(RefCell::new(
             Node { val: arr[i],
                     left : self.build_tree(arr, i*2 +1),
@@ -43,13 +45,13 @@ impl <T: Debug + Copy> Tree<T> {
         self.root = root;
     }
 
-    fn print_Tree(&mut self ){
+    fn print_tree(&mut self ){
         if self.root.is_none() {
             println!("The tree is Empty !! ")
         };
 
         let mut queue : VecDeque<Link<T>> =  VecDeque::new();
-
+        
         queue.push_back(self.root.clone());
 
         while !queue.is_empty() {
@@ -63,13 +65,60 @@ impl <T: Debug + Copy> Tree<T> {
 
                 },
                 None =>{
-                    println!("None")
+                    // println!("None")
                 }
             }
 
         }
     }
+
+
+    fn search(&mut self,val : T) -> Option<T>{
+        if self.root.is_none()  {return  None;}
+
+        let mut s : VecDeque<Link<T>> =  VecDeque::new();
+
+        s.push_back(self.root.clone());
+
+        while !s.is_empty() {
+            let current = s.pop_front().unwrap();
+            match current {
+                Some(node) =>{
+                    if node.borrow_mut().val  == val { 
+                            return Some(val);
+                    }
+                    if  node.borrow().left.is_some() { s.push_back(node.borrow_mut().left.clone()); }
+                    if  node.borrow().right.is_some() {s.push_back(node.borrow_mut().right.clone());}
+                }None =>{}
+            }
+        }
+        
+        None
+    }
 }
+
+
+
+
+enum Order {
+        LDR,
+        LRD
+
+        
+}
+
+fn  Transverse<T: Debug + Copy +PartialEq> (root : Link<T>,) {
+    if root.is_some() { 
+        let node = root.unwrap();
+        Transverse(node.borrow_mut().left.clone());
+        println!("{:?}",node.borrow().val);
+        Transverse(node.borrow_mut().right.clone());
+    }
+}
+
+
+
+
 
 
 pub fn Tree_operations() {
@@ -78,12 +127,21 @@ pub fn Tree_operations() {
 
 
     let mut tree_A = Tree::new();
-
     let mut arr =[20,30,40,55,12,76,-1,10];
 
     tree_A.initiate(&arr);
 
-    tree_A.print_Tree();
+    tree_A.print_tree();
 
+    let result = tree_A.search(-1);
+
+    match  result {
+        Some(iteme  )=>{println!("The item  ( {:?} ) exists ", iteme)},
+        None =>{println!("The item you are searching doesnt exists")}
+    };
+
+
+    println!("Pre Order Transversal ");
+    Transverse(tree_A.root);
 
 }

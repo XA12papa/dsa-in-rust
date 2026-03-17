@@ -138,5 +138,5 @@ fn main() {
     Stack::stack_operations();
     queue::queue_operations();
 
-    BinaryTree::Tree_operations();
+    BinaryTree::Tree_operations();  
 }
