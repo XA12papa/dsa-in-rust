@@ -49,7 +49,63 @@ pub fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
 }
 
 
+pub fn generate_matrix(n: i32) -> Vec<Vec<i32>> {
 
+    let N  = n as usize;
+
+        let mut top =   0 ;  
+        let mut bottom  =  N -1 ; 
+
+        let mut  left = 0 ; 
+        let mut right =  N -1 ; 
+
+        let mut result = vec![vec![0;N] ;N ];
+
+        let mut count = 1 ;
+         
+        while  top <= bottom && left <= right {
+
+            for i in left..=right  { 
+                result[top ][i] =  count;
+                count += 1 ; 
+            }
+
+
+            top += 1 ;
+
+            for  i in top..= bottom {
+                result[i][right ]  = count;
+                count += 1;
+            }
+
+            if right == 0 {break};
+
+            right -= 1 ;
+
+            if top <= bottom { 
+                for i in (left..=right).rev()  { 
+                    result[bottom][i] = count;
+                    count += 1 ;
+                }
+
+                if bottom == 0  {break;}
+                bottom -=1 ;
+            }
+
+
+            if left <= right { 
+                for i in (top..=bottom).rev() {
+                    result[i][left] = count;
+                    count +=1 ;
+                }
+
+                left += 1;
+            }
+
+
+        }
+        return result;
+}
 
 pub fn matrixOperations(){ 
     let s   =vec![
@@ -57,5 +113,11 @@ pub fn matrixOperations(){
         vec![5,6,7,8],
         vec![9,10,11,12]
     ];
+
+
+    let result = generate_matrix(3);
+
+
+    println!("{:?}",result);
 
 }

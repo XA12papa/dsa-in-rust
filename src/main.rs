@@ -5,6 +5,7 @@ use Practice_Rust::linked_list::Single_list;
 use Practice_Rust::Stack::Stack;
 use Practice_Rust::Queue::queue;
 use Practice_Rust::Tree::BinaryTree;
+use Practice_Rust::Matrix::matrix;
 
 fn analyze_size(arr : &[i32]){
     println!("The first element is {:?}",arr[0]);
@@ -138,5 +139,6 @@ fn main() {
     Stack::stack_operations();
     queue::queue_operations();
 
-    BinaryTree::Tree_operations();  
+    BinaryTree::Tree_operations(); 
+    matrix::matrixOperations(); 
 }
