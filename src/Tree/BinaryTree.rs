@@ -1,7 +1,5 @@
-use core::panic;
-use std::{cell::RefCell, collections::VecDeque, fmt::Debug, io::Cursor, rc::Rc};
+use std::{cell::RefCell, collections::VecDeque, fmt::Debug, rc::Rc};
 
-use crate::Queue::queue;
 
 
 
@@ -100,19 +98,32 @@ impl <T: Debug + Copy +PartialEq> Tree<T> {
 
 
 
-enum Order {
-        LDR,
-        LRD
-
-        
+enum Transversal {
+    PreOrder,
+    InOrder,
+    PostOrder
 }
 
-fn  Transverse<T: Debug + Copy +PartialEq> (root : Link<T>,) {
+fn  tranverse<T: Debug + Copy +PartialEq> (root : Link<T>, order : Transversal) {
     if root.is_some() { 
         let node = root.unwrap();
-        Transverse(node.borrow_mut().left.clone());
-        println!("{:?}",node.borrow().val);
-        Transverse(node.borrow_mut().right.clone());
+        match  order {
+            Transversal::PreOrder => {
+                println!("{:?}",node.borrow().val);
+                tranverse(node.borrow_mut().left.clone(), Transversal::PreOrder);
+                tranverse(node.borrow_mut().right.clone(), Transversal::PreOrder);
+            },
+            Transversal::InOrder => {
+                tranverse(node.borrow_mut().left.clone(), Transversal::InOrder);
+                println!("{:?}",node.borrow().val);
+                tranverse(node.borrow_mut().right.clone(), Transversal::InOrder);
+            },
+            Transversal::PostOrder => {
+                tranverse(node.borrow_mut().left.clone(), Transversal::PostOrder);
+                tranverse(node.borrow_mut().right.clone(), Transversal::PostOrder);
+                println!("{:?}",node.borrow().val);
+            }
+        }
     }
 }
 
@@ -121,7 +132,7 @@ fn  Transverse<T: Debug + Copy +PartialEq> (root : Link<T>,) {
 
 
 
-pub fn Tree_operations() {
+pub fn tree_operations() {
 
     println!("Below are tree operations ");
 
@@ -142,6 +153,13 @@ pub fn Tree_operations() {
 
 
     println!("Pre Order Transversal ");
-    Transverse(tree_A.root);
+    tranverse(tree_A.root.clone(), Transversal::PreOrder);
+    println!("In Order Transversal ");
+    tranverse(tree_A.root.clone(), Transversal::InOrder);
+    println!("Post Order Transversal ");
+    tranverse(tree_A.root.clone(), Transversal::PostOrder);
+
+
+
 
 }

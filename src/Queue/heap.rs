@@ -28,7 +28,7 @@ impl MaxHeap{
     }
 
 
-    fn print_head(&mut self) {
+    fn print_elements(&mut self) {
          for i in 0..self.data.len() {
             println!("{:?}",self.data[i]);
          }
@@ -60,5 +60,15 @@ impl MaxHeap{
 }
 
 pub fn heap_operation() {
+
+    println!("Bellow are the heap operations ");
+
+    let mut  heap_a = MaxHeap::new();
+    
+    for i in 0..8 { 
+        heap_a.push(i);
+    };
+
+    heap_a.print_elements();
 
 }

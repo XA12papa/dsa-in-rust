@@ -3,3 +3,4 @@ pub mod Queue;
 pub mod Stack;
 pub mod Tree;
 pub mod Matrix;
+pub mod Graph;
